@@ -1,0 +1,139 @@
+product:
+  name: "PETER Online Book Store"
+  audience: "students and young readers"
+  purpose: "Browse books by title or author, save favorites, manage a cart, and place orders"
+  credit: "Last finish made by Jones JP"
+architecture:
+  preserve:
+    - "React 19 + TypeScript + Vite"
+    - "Tailwind CSS v4"
+    - "React Router DOM v7"
+    - "Axios client and JWT interceptor"
+    - "AuthContext and CartContext"
+    - "Express + Node.js REST API"
+    - "MongoDB + Mongoose models: User, Book, Cart, Order"
+    - "Existing API contracts unless a change is documented and tested"
+  routes:
+    - "/"
+    - "/cart"
+    - "/checkout"
+    - "/order-success/:orderId"
+    - "/orders"
+  principles:
+    - "No frontend-only mock replacement for existing backend functionality"
+    - "Do not claim deployment or tests succeeded until verified"
+    - "Preserve real stock validation, server-authoritative prices, authentication, and order history"
+design_tokens:
+  color:
+    background: "#111318"
+    surface: "#191C24"
+    elevated: "#292D38"
+    accent: "#B9A4FF"
+    accent_warm: "#E7AE68"
+    text: "#F4F1EA"
+    muted: "#B5B7C2"
+    border: "#343844"
+    success: "#72C69B"
+    warning: "#F0BE70"
+    danger: "#F08B8B"
+  typography:
+    display: "DM Serif Display or comparable editorial serif"
+    interface: "Inter or comparable sans-serif"
+    body_base_px: 16
+    supporting_text_min_px: 12
+  spacing_base_px: 4
+  radii_px:
+    controls: 8
+    cards: 12
+    hero: 24
+  content_max_width_px: 1280
+screens:
+  home:
+    components: ["Header", "Search", "Hero3DBook", "CuratedCollections", "CategoryFilters", "BookGrid", "Recommendations", "Footer"]
+    interactions: ["search by title/author", "category filter", "sort", "in-stock filter", "quick view", "wishlist toggle", "add to cart"]
+  cart:
+    components: ["CartItems", "QuantityControls", "RemoveItem", "OrderTotals", "CheckoutCTA", "EmptyState"]
+  checkout:
+    components: ["DeliveryForm", "FieldErrors", "OrderSummary", "SubmitLoadingState", "ServerErrorRecovery"]
+  order_success:
+    components: ["OrderIdentifier", "PurchasedItems", "OrderTotals", "ContinueShopping", "OrderHistoryLink"]
+  orders:
+    components: ["OrderHistoryList", "OrderSnapshot", "LoadingState", "EmptyState", "ErrorState"]
+  overlays:
+    - "Accessible slide-out cart drawer"
+    - "Accessible book quick-view dialog"
+    - "Existing authentication modal"
+    - "Accessible toast notifications"
+features:
+  wishlist:
+    behavior: "Toggle saved state visibly; persist per user only if backend support is safely implemented; do not imply cross-device sync without persistence"
+  cart_drawer:
+    behavior: "Server-backed cart; stock-bounded quantity; focus trap; Escape close; restore focus; background scroll lock"
+  quick_view:
+    behavior: "Reuse catalogue data and types; show title, author, cover, description, price, stock, wishlist and add-to-cart"
+  recommendations:
+    behavior: "Curated/category-based rules from real catalogue data; do not claim AI personalization unless implemented"
+motion:
+  style: "balanced and purposeful"
+  libraries:
+    lenis: "Optional smooth scroll for suitable desktop views; preserve native scrolling and reduced-motion behavior"
+    gsap: "Hero entrance and one restrained scroll reveal; clean up timelines and ScrollTriggers"
+    react_bits: "Integrate selected components individually after reviewing dependencies, accessibility, bundle size and license"
+    three_d: "Prefer lazy-loaded React Three Fiber/Drei GLB hero if viable; otherwise use CSS 3D fallback"
+  durations_ms:
+    micro: [120, 180]
+    drawer_dialog: [220, 320]
+    hero: [500, 800]
+  rules:
+    - "Respect prefers-reduced-motion"
+    - "No essential content depends on animation"
+    - "Avoid layout thrashing; prefer transform and opacity"
+    - "Provide static fallback when WebGL fails or on constrained mobile devices"
+responsive:
+  target_widths_px: [375, 390, 430, 768, 1024, 1280, 1440, 1920]
+  requirements:
+    - "No horizontal overflow"
+    - "Touch targets ideally >= 44x44 CSS px"
+    - "Mobile has functional menu and search"
+    - "Reduce or replace 3D on mobile/low-power devices"
+accessibility:
+  contrast: "WCAG AA target for text and interactive controls"
+  requirements:
+    - "Visible keyboard focus"
+    - "Semantic links and buttons"
+    - "Labeled forms and field-level errors"
+    - "Dialog focus management"
+    - "Live-region announcements for cart/toast updates"
+    - "Status never communicated by color alone"
+    - "Honor prefers-reduced-motion"
+security_and_reliability:
+  requirements:
+    - "Require strong environment-provided JWT secret in production"
+    - "Protect or disable public seed/reset endpoint outside demo mode"
+    - "Use persistent MongoDB in production; in-memory fallback only explicit local/demo"
+    - "Escape regex search input and cap query length"
+    - "Avoid returning raw server exceptions to clients"
+    - "Test inventory consistency if order save fails after stock decrement"
+    - "Use MongoDB transaction where deployment supports it, or verified compensation/rollback"
+qa:
+  functional:
+    - "Registration and login"
+    - "Search by title and author"
+    - "Category, sort and stock filters"
+    - "Add/update/remove cart items"
+    - "Cart persists after refresh"
+    - "Stock boundaries and out-of-stock behavior"
+    - "Checkout validation and server-authoritative totals"
+    - "Order creation, stock update and order history"
+    - "Failure handling and session isolation"
+  visual:
+    - "Test all target widths"
+    - "No broken images or horizontal overflow"
+    - "Loading, empty, error and success states"
+    - "Functional mobile navigation"
+    - "Favicon, titles, meta descriptions, footer links and custom 404"
+  build:
+    - "Run type-check/lint"
+    - "Run existing tests and add endpoint/failure-path integration tests"
+    - "Run production build"
+    - "Verify deployed deep links, environment, CORS and persistent data"

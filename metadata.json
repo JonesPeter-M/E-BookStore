@@ -1,0 +1,6 @@
+{
+  "name": "Online Bookstore",
+  "description": "Full-stack bookstore application with catalog search, shopping cart, stock validation, atomic checkout, and order history.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
